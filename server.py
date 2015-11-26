@@ -39,6 +39,7 @@ def setTrustLevel(deviceLocationId):
         trustLevel = request.args.get('trustLevel')
         if trustLevel:
             if deviceLocation.setTrustLevel(trustLevel):
+                db.session.refresh(deviceLocation)
                 return jsonify({'status': 200, 'deviceLocation': deviceLocation.forJsonify()})
     return jsonify({'status': 400})
 
@@ -64,6 +65,7 @@ def addDeviceLocation(userId):
                 deviceLocation = DeviceLocation(userId=userId, lat=lat, long=long, name=name)
                 db.session.add(deviceLocation)
                 db.session.commit()
+                db.session.refresh(deviceLocation)
                 return jsonify({'deviceLocation': deviceLocation.forJsonify(), 'status': 201})
             else:
                 return jsonify({'status': 400})
