@@ -27,6 +27,7 @@ class DeviceLocation(db.Model):
             t = float(trustLevel)
             if t >= 0.0 and t <= 1.0:
                 self.trustLevel = t
+                db.session.commit()
                 return True
             return False
         except ValueError:
