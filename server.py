@@ -42,7 +42,7 @@ def setTrustLevel(trustLevel, deviceLocationId):
                 return jsonify({'status': 200})
     return jsonify({'status': 400})
 
-@app.route('/get_trust_level/<deviceId>')
+@app.route('/get_trust_level/<deviceLocationId>')
 def getTrustLevel(deviceLocationId):
     # get the TrustLevel for a deviceId
     deviceLocation = DeviceLocation.query.filter_by(id=deviceLocationId).first()
@@ -54,7 +54,7 @@ def getTrustLevel(deviceLocationId):
 @app.route('/add_device_locatiom/<userId>')
 def addDeviceLocation(userId):
     # add a DeviceLocation with a name for a user
-    user = User.query.filter_by(id=userId)
+    user = User.query.filter_by(id=userId).fist()
     if user:
         lat = request.args.get('lat')
         long = request.args.get('long')
@@ -63,7 +63,7 @@ def addDeviceLocation(userId):
             deviceLocation = DeviceLocation(userId=userId, lat=lat, long=long, name=name)
             db.session.add(deviceLocation)
             db.session.commit()
-            return jsonify({'deviceLocation': deviceLocation, 'status': 201})
+            return jsonify({'deviceLocation': deviceLocation.asJson(), 'status': 201})
         else:
             jsonify({'status': 400})
     else:
