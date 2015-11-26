@@ -23,9 +23,14 @@ class DeviceLocation(db.Model):
     long = db.Column(db.Float)
 
     def setTrustLevel(self, trustLevel):
-        if trustLevel >= 0.0 and trustLevel <= 1.0:
-            self.trustLevel = trustLevel
-            return True
+        try:
+            t = float(trustLevel)
+            if t >= 0.0 and t <= 1.0:
+                self.trustLevel = t
+                return True
+            return False
+        except ValueError:
+            return False
 
     def asJson(self):
         return "{id:{}, lat:{}, long:{}, trustLevel:{}, name:{}}".format(self.id, self.lat, self.long, self.trustLevel,
