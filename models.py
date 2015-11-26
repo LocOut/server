@@ -11,6 +11,9 @@ class User(db.Model):
     def deviceLocationsForJsonify(self):
         return [x.forJsonify() for x in self.deviceLocations]
 
+    def forJsonify(self):
+        return {'id': self.id, 'deviceLocations': self.deviceLocationsForJsonify()}
+
 class DeviceLocation(db.Model):
     __tablename__ = "device_locations"
     id = db.Column(db.Integer, primary_key=True)
