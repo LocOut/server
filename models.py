@@ -17,4 +17,6 @@ class DeviceLocation(db.Model):
     long = db.Column(db.Float)
 
     def setTrustLevel(self, trustLevel):
-        self.trustLevel = trustLevel
+        if trustLevel >= 0.0 and trustLevel <= 1.0:
+            self.trustLevel = trustLevel
+            return True
