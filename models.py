@@ -9,7 +9,7 @@ class User(db.Model):
     deviceLocations = db.relationship("DeviceLocation", backref="user")
 
     def deviceLocationsAsJson(self):
-        return [x.asJson() for x in self.deviceLocations]
+        return [x.forJsonify for x in self.deviceLocations]
 
 class DeviceLocation(db.Model):
     __tablename__ = "device_locations"
@@ -31,6 +31,7 @@ class DeviceLocation(db.Model):
         except ValueError:
             return False
 
-    def asJson(self):
-        return "{id:{}, lat:{}, long:{}, trustLevel:{}, name:{}}".format(self.id, self.lat, self.long, self.trustLevel,
-                                                                         self.name)
+    def forJsonify(self):
+        out = self.__dict__
+        out.pop("_sa_instance_state", None)
+        return out
