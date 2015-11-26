@@ -8,8 +8,8 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     deviceLocations = db.relationship("DeviceLocation", backref="user")
 
-    def deviceLocationsAsJson(self):
-        return [x.forJsonify for x in self.deviceLocations]
+    def deviceLocationsForJsonify(self):
+        return [x.forJsonify() for x in self.deviceLocations]
 
 class DeviceLocation(db.Model):
     __tablename__ = "device_locations"
