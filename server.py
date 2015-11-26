@@ -27,7 +27,7 @@ def getUser(id):
 def getUserDevices(id):
     user = User.query.filter_by(id=id).first()
     if user:
-        return jsonify({'status': 200, 'deviceLocations': User.deviceLocationsAsJson()})
+        return jsonify({'status': 200, 'deviceLocations': user.deviceLocationsAsJson()})
     else:
         return jsonify({'status': 400})
 
