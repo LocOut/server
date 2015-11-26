@@ -9,7 +9,7 @@ class User(db.Model):
     deviceLocations = db.relationship("DeviceLocation", backref="user")
 
     def deviceLocationsAsJson(self):
-        return [x.asJson for x in self.deviceLocations]
+        return [x.asJson() for x in self.deviceLocations]
 
 class DeviceLocation(db.Model):
     __tablename__ = "device_locations"
