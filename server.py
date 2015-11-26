@@ -56,16 +56,19 @@ def addDeviceLocation(userId):
     # add a DeviceLocation with a name for a user
     user = User.query.filter_by(id=userId).fist()
     if user:
-        lat = request.args.get('lat')
-        long = request.args.get('long')
-        name = request.args.get('name')
-        if lat and long and name:
-            deviceLocation = DeviceLocation(userId=userId, lat=lat, long=long, name=name)
-            db.session.add(deviceLocation)
-            db.session.commit()
-            return jsonify({'deviceLocation': deviceLocation.ForJsonify(), 'status': 201})
-        else:
-            jsonify({'status': 400})
+        try:
+            lat = float(request.args.get('lat'))
+            long = float(request.args.get('long'))
+            name = request.args.get('name')
+            if lat and long and name:
+                deviceLocation = DeviceLocation(userId=userId, lat=lat, long=long, name=name)
+                db.session.add(deviceLocation)
+                db.session.commit()
+                return jsonify({'deviceLocation': deviceLocation.forJsonify(), 'status': 201})
+            else:
+                return jsonify({'status': 400})
+        except:
+            return jsonify({'status': 400})
     else:
         return jsonify({'status': 400})
 
