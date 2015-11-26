@@ -32,7 +32,7 @@ def getUserDevices(id):
         return jsonify({'status': 400})
 
 @app.route('/set_trust_level/<deviceLocationId>')
-def setTrustLevel(trustLevel, deviceLocationId):
+def setTrustLevel(deviceLocationId):
     # set trust level (float 0-1) for device
     deviceLocation = DeviceLocation.query.filter_by(id=deviceLocationId).first()
     if deviceLocation:
