@@ -54,7 +54,7 @@ def getTrustLevel(deviceLocationId):
 @app.route('/add_device_location/<userId>')
 def addDeviceLocation(userId):
     # add a DeviceLocation with a name for a user
-    user = User.query.filter_by(id=userId).fist()
+    user = User.query.filter_by(id=userId).first()
     if user:
         try:
             lat = float(request.args.get('lat'))
