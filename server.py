@@ -1,6 +1,6 @@
 __author__ = 'Aron Kunze'
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 import os
 
@@ -13,7 +13,7 @@ from models import User, DeviceLocation
 
 @app.route('/')
 def index():
-    return "LocOut"
+    return render_template('index.html')
 
 @app.route('/user/<id>')
 def getUser(id):
