@@ -1,31 +1,72 @@
 __author__ = 'Aron Kunze'
 
-from flask import Flask
+from flask import Flask, jsonify, request, render_template
+from flask.ext.sqlalchemy import SQLAlchemy
+import os
+
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
+
+from models import User, DeviceLocation
 
 @app.route('/')
 def index():
-    return "LocOut"
-    
-@app.route('/get_user/<id>')
+    return render_template('index.html')
+
+@app.route('/user/<id>')
 def getUser(id):
-    # return all devices for user
-    pass
+    user = User.query.filter_by(id=id).first()
+    if user:
+        return jsonify({'status': 200, 'user': user.forJsonify()})
+    else:
+        return jsonify({'status': 404})
 
-@app.route('/set_trust_level/<deviceId>')
-def setTrustLevel(trustLevel, deviceId):
+@app.route('/get_user_devices/<id>')
+def getUserDevices(id):
+    user = User.query.filter_by(id=id).first()
+    if user:
+        return jsonify({'status': 200, 'deviceLocations': user.deviceLocationsForJsonify()})
+    else:
+        return jsonify({'status': 400})
+
+@app.route('/set_trust_level/<deviceLocationId>')
+def setTrustLevel(deviceLocationId):
     # set trust level (float 0-1) for device
-    pass
+    deviceLocation = DeviceLocation.query.filter_by(id=deviceLocationId).first()
+    if deviceLocation:
+        trustLevel = request.args.get('trustLevel')
+        if trustLevel:
+            if deviceLocation.setTrustLevel(trustLevel):
+                return jsonify({'status': 200, 'deviceLocation': deviceLocation.forJsonify()})
+    return jsonify({'status': 400})
 
-@app.route('/get_trust_level/<deviceId>')
-def getTrustLevel(deviceId):
+@app.route('/get_trust_level/<deviceLocationId>')
+def getTrustLevel(deviceLocationId):
     # get the TrustLevel for a deviceId
-    pass
+    deviceLocation = DeviceLocation.query.filter_by(id=deviceLocationId).first()
+    if deviceLocation:
+        return jsonify({'status': 200, 'trustLevel': deviceLocation.trustLevel})
+    else:
+        return jsonify({'status': 400})
 
-@app.route('/add_device_locatiom/<userId>')
-def addDeviceLocation(lat, long, name, userId):
+@app.route('/add_device_location/<userId>')
+def addDeviceLocation(userId):
     # add a DeviceLocation with a name for a user
-    pass
+    user = User.query.filter_by(id=userId).fist()
+    if user:
+        lat = request.args.get('lat')
+        long = request.args.get('long')
+        name = request.args.get('name')
+        if lat and long and name:
+            deviceLocation = DeviceLocation(userId=userId, lat=lat, long=long, name=name)
+            db.session.add(deviceLocation)
+            db.session.commit()
+            return jsonify({'deviceLocation': deviceLocation.ForJsonify(), 'status': 201})
+        else:
+            jsonify({'status': 400})
+    else:
+        return jsonify({'status': 400})
 
 
