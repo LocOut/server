@@ -3,6 +3,7 @@
 		<style type="text/css">
 			h1 {
 				text-align: center;
+				color: #FFFFFF;
 			}
 			.scale {width: 310px;
 				height: 300px;
@@ -33,7 +34,6 @@
 	    		var devices;
 	    		var chart;
 	    		$.get("https://locout.herokuapp.com/user/"+ userId, function(data){
-
 	    			devices = data.user.deviceLocations;
 	    			numDevices = devices.length;
 		        	for (var i = 0; i < numDevices; i++){

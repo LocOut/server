@@ -15,6 +15,7 @@ function createChart(id, options, name){
 
             title: {
                 text: name,
+                style: {'color':'#FFFFFF'}
             },
 
             pane: {
