@@ -2,10 +2,12 @@ __author__ = 'Aron Kunze'
 
 from flask import Flask, jsonify, request, render_template, send_from_directory
 from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.cors import CORS
 import os
 
 
 app = Flask(__name__)
+CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 db = SQLAlchemy(app)
 
