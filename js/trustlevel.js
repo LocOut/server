@@ -73,14 +73,14 @@ function createChart(id, options, name){
                 },
                 plotBands: [{
                     from: 0,
-                    to: 40,
+                    to: 50,
                     color: '#DF5353' // red
                 }, {
-                    from: 40,
-                    to: 80,
+                    from: 50,
+                    to: 75,
                     color: '#DDDF0D' // yellow
                 }, {
-                    from: 80,
+                    from: 75,
                     to: 100,
                     color: '#55BF3B' // green
                 }]
@@ -99,15 +99,13 @@ function createChart(id, options, name){
         function (chart) {
             $("text[text-anchor=end").hide();
             //$("g.highcharts-button").hide();
-            if (!chart.renderer.forExport) {
-                setInterval(function () {
-                    $.get("https://locout.herokuapp.com/user/1", function(data){
-                        var point = chart.series[0].points[0];
-                        point.update(Math.round(data.user.deviceLocations[id].trustLevel * 100));
-                    }); 
+            setInterval(function () {
+                $.get("https://locout.herokuapp.com/user/1", function(data){
+                    var point = chart.series[0].points[0];
+                    point.update(Math.round(data.user.deviceLocations[id].trustLevel * 100));
+                }); 
 
-                }, 10000);
-            }
+            }, 10000);
 
         });
     });
