@@ -1,8 +1,7 @@
-function createChart(id, options){
+function createChart(id, options, name){
     $(function () {
 
-        console.log("start");
-        $(id).highcharts({
+        $("#device" + id).highcharts({
 
             chart: {
                 type: 'gauge',
@@ -13,7 +12,7 @@ function createChart(id, options){
             },
 
             title: {
-                text: 'Trustlevel'
+                text: name
             },
 
             pane: {
@@ -88,7 +87,7 @@ function createChart(id, options){
             },
 
             series: [{
-                name: 'Speed',
+                name: 'Trust Level',
                 data: options,
                 tooltip: {
                     valueSuffix: ' %'
@@ -102,17 +101,12 @@ function createChart(id, options){
             //$("g.highcharts-button").hide();
             if (!chart.renderer.forExport) {
                 setInterval(function () {
-                    var point = chart.series[0].points[0],
-                        newVal,
-                        inc = Math.round((Math.random() - 0.5) * 20);
+                    $.get("https://locout.herokuapp.com/user/1", function(data){
+                        var point = chart.series[0].points[0];
+                        point.update(Math.round(data.user.deviceLocations[id].trustLevel * 100));
+                    }); 
 
-                    newVal = point.y + inc;
-                    if (newVal < 0 || newVal > 100) {
-                        newVal = point.y - inc;
-                    }
-
-                    point.update(newVal);
-                }, 3000);
+                }, 10000);
             }
 
         });
