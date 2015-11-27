@@ -25,7 +25,7 @@ def send_js(fileName):
 def getDashboart(id):
     user = User.query.filter_by(id=id).first()
     if user:
-        return render_template('index.html')
+        return render_template('index.html', id=id)
     else:
         return 404
 
