@@ -100,8 +100,6 @@ function createChart(id, options){
         function (chart) {
             $("text[text-anchor=end").hide();
             //$("g.highcharts-button").hide();
-            console.log(options);
-            console.log("export");
             if (!chart.renderer.forExport) {
                 setInterval(function () {
                     var point = chart.series[0].points[0],
@@ -114,12 +112,9 @@ function createChart(id, options){
                     }
 
                     point.update(newVal);
-                    console.log("update");
                 }, 3000);
             }
 
         });
-
-        console.log("end");
     });
 }

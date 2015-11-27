@@ -3,47 +3,37 @@
 		<!--     <link rel="stylesheet" href="EXAMPLE.css" />   -->
 	</head>
 	<body>
-		<script src="js/jquery.min.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/highcharts-more.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		
-		<script src="js/trustlevel.js"></script>
+		<script src="trustlevel.js"></script>
 		<script>
 			$(document).ready(function(){
-			/*
-				// get Data from server
-				$.get("SERVERURL", function(data){
-	        			alert("Data: " + data);
-						var counter = 0;
-	        			for (var elem in data){
-	        				counter = counter +1;
-							$("body").append("<div id=counter style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto"></div>");
 
-	        			}
-	    			});
-	    		*/
+	    		var devices;
+	    		$.get("https://locout.herokuapp.com/user/1", function(data){
+	    			devices = data.user.deviceLocations;
 
-				var counter = 0;
-				var data = [40, 70, 50, 100];
-				$.get("/user/1", function(data){
-					console.log(data)
-				})
-	        	for (var elem in data){
-	        		var scale = document.createElement("div");
-	        		counter = counter +1;
-	        		scale.id = "trustlevel" + counter;
-	        		scale.style = "min-width: 310px; max-width: 400px; height: 300px; margin: 0; float:left;"
-	        		scale.innerHTML = "";
-					document.body.appendChild(scale);
-					$("text").hide();
-					createChart("#trustlevel" + counter, [data[elem]]);
-				};
 
+					var counter = 0;
+					console.log("hi");
+		        	for (var i = 0; i < devices.length; i++){
+		        		var scale = document.createElement("div");
+		        		counter = counter +1;
+		        		scale.id = "trustlevel" + counter;
+		        		scale.style = "min-width: 310px; max-width: 400px; height: 300px; margin: 0; float:left;"
+		        		scale.innerHTML = "";
+		        		console.log("hi");
+						document.body.appendChild(scale);
+						console.log(i + " " + " Device : " + devices[i] + " trustlevel " + devices[i].trustLevel);
+						createChart("#trustlevel" + counter, [devices[i].trustLevel]);
+					};
+				});
 				window.setTimeout(function() {
 					$("g.highcharts-button").hide();
-				}, 1000);
-				
+				}, 500);
 				
 			});
 		</script>
