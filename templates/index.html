@@ -19,26 +19,29 @@
 		<div id="wrapper" width="450px" heigth="350px">
 			<script>
 				$(document).ready(function(){
-
 		    		var devices;
 		    		$.get("https://locout.herokuapp.com/user/1", function(data){
-		    			devices = data.user.deviceLocations;
 
-						// var counter = 0;
-			        	for (var i = 0; i < devices.length; i++){
+		    			devices = data.user.deviceLocations;
+		    			numDevices = devices.length;
+			        	for (var i = 0; i < numDevices; i++){
 			        		var scale = document.createElement("div");
-			        		// counter = counter +1;
 			        		scale.id = "device" + i;
 			        		scale.className = "scale";
 			        		scale.innerHTML = "";
 							document.body.appendChild(scale);
 							createChart(i, [Math.round(devices[i].trustLevel * 100)], devices[i].name);
 						};
+						window.setTimeout(function() {
+							$("g.highcharts-button").hide();
+						}, 100);
+						setInterval(function () {
+                			$.get("https://locout.herokuapp.com/user/1", function(data){
+                				if (numDevices != data.user.deviceLocations.length)
+                					location.reload();
+			                }); 
+			            }, 10000);
 					});
-					window.setTimeout(function() {
-						$("g.highcharts-button").hide();
-					}, 1000);
-					
 				});
 			</script>
 		</div>
