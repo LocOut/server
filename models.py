@@ -9,7 +9,7 @@ class User(db.Model):
     deviceLocations = db.relationship("DeviceLocation", backref="user")
 
     def deviceLocationsForJsonify(self):
-        return [x.forJsonify() for x in self.deviceLocations].sort(key=lambda e: int(e["id"]))
+        return sorted([x.forJsonify() for x in self.deviceLocations], key=lambda e: int(e["id"]))
 
     def forJsonify(self):
         return {'id': self.id, 'deviceLocations': self.deviceLocationsForJsonify()}
