@@ -76,7 +76,7 @@ def addDeviceLocation(userId):
 
 @app.route('/remove_device_location/<deviceLocationId>')
 def removeDeviceLocation(deviceLocationId):
-    deviceLocation = DeviceLocation.query.filter_by(id=deviceLocationId)
+    deviceLocation = DeviceLocation.query.filter_by(id=deviceLocationId).first()
     if deviceLocation:
         db.session.delete(deviceLocation)
         db.session.commit()
