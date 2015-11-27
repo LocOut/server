@@ -1,11 +1,21 @@
 <html>
 	<head>
 		<style type="text/css">
-			.scale {min-width: 310px;} 
-			.scale {max-width: 400px;}
-			.scale {height: 300px;}
-			.scale {margin: 10px;}
-			.scale {float:left;}
+			h1 {
+				text-align: center;
+			}
+			.scale {width: 310px;
+				height: 300px;
+				margin: 10px;
+				float:left;
+				background-color: transparent;}
+
+			#wrapper {width: 1320px;
+					height: 350px;
+					margin: 0 auto;}
+			body {
+				background-color: #2196F3
+			}
 		</style>
 	</head>
 	<body>
@@ -16,34 +26,39 @@
 		
 		<script src="../js/trustlevel.js"></script>
 		<h1 >Trust Levels</h1>
-		<div id="wrapper" width="450px" heigth="350px">
-			<script>
-				$(document).ready(function(){
-		    		var devices;
-		    		$.get("https://locout.herokuapp.com/user/1", function(data){
+		<div id="wrapper"/>
+		<script>
+			var userId = 1;
+			$(document).ready(function(){
+	    		var devices;
+	    		var chart;
+	    		$.get("https://locout.herokuapp.com/user/"+ userId, function(data){
 
-		    			devices = data.user.deviceLocations;
-		    			numDevices = devices.length;
-			        	for (var i = 0; i < numDevices; i++){
-			        		var scale = document.createElement("div");
-			        		scale.id = "device" + i;
-			        		scale.className = "scale";
-			        		scale.innerHTML = "";
-							document.body.appendChild(scale);
-							createChart(i, [Math.round(devices[i].trustLevel * 100)], devices[i].name);
-						};
-						window.setTimeout(function() {
-							$("g.highcharts-button").hide();
-						}, 100);
-						setInterval(function () {
-                			$.get("https://locout.herokuapp.com/user/1", function(data){
-                				if (numDevices != data.user.deviceLocations.length)
-                					location.reload();
-			                }); 
-			            }, 10000);
-					});
+	    			devices = data.user.deviceLocations;
+	    			numDevices = devices.length;
+		        	for (var i = 0; i < numDevices; i++){
+		        		var scale = document.createElement("div");
+		        		var parent = document.getElementById("wrapper");
+		        		scale.id = "device" + i;
+		        		scale.className = "scale";
+		        		scale.innerHTML = "";
+						parent.appendChild(scale);
+						chart = createChart(i, [Math.round(devices[i].trustLevel * 100)], devices[i].name);
+					};
+            		$("text[text-anchor=end").hide();
+					$("g.highcharts-button").hide();
+					setInterval(function () {
+            			$.get("https://locout.herokuapp.com/user/" + userId, function(data){
+            				if (numDevices != data.user.deviceLocations.length)
+            					location.reload();
+            				for (var i = 0; i < numDevices; i++){
+                				var point = chart.series[0].points[0];
+                				point.update(Math.round(data.user.deviceLocations[i].trustLevel * 100));
+                			}
+		                }); 
+		            }, 10000);
 				});
-			</script>
-		</div>
+			});
+		</script>
 	</body>
 </html>

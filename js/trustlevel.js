@@ -1,10 +1,12 @@
 function createChart(id, options, name){
+    var newChart;
     $(function () {
 
         $("#device" + id).highcharts({
 
             chart: {
                 type: 'gauge',
+                backgroundColor: null,
                 plotBackgroundColor: null,
                 plotBackgroundImage: null,
                 plotBorderWidth: 0,
@@ -12,7 +14,7 @@ function createChart(id, options, name){
             },
 
             title: {
-                text: name
+                text: name,
             },
 
             pane: {
@@ -95,18 +97,10 @@ function createChart(id, options, name){
             }]
 
         },
-        // Add some life
         function (chart) {
-            $("text[text-anchor=end").hide();
-            //$("g.highcharts-button").hide();
-            setInterval(function () {
-                $.get("https://locout.herokuapp.com/user/1", function(data){
-                    var point = chart.series[0].points[0];
-                    point.update(Math.round(data.user.deviceLocations[id].trustLevel * 100));
-                }); 
-
-            }, 10000);
+            newChart = chart;
 
         });
     });
+    return newChart;
 }
