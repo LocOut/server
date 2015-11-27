@@ -10,38 +10,39 @@
 		
 		<script src="trustlevel.js"></script>
 		<script>
-		$(document).ready(function(){
-		/*
-			// get Data from server
-			$.get("SERVERURL", function(data){
-        			alert("Data: " + data);
-					var counter = 0;
-        			for (var elem in data){
-        				counter = counter +1;
-						$("body").append("<div id=counter style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto"></div>");
+			$(document).ready(function(){
+			/*
+				// get Data from server
+				$.get("SERVERURL", function(data){
+	        			alert("Data: " + data);
+						var counter = 0;
+	        			for (var elem in data){
+	        				counter = counter +1;
+							$("body").append("<div id=counter style="min-width: 310px; max-width: 400px; height: 300px; margin: 0 auto"></div>");
 
-        			}
-    			});
-    		*/
+	        			}
+	    			});
+	    		*/
 
-			var counter = 0;
-			var data = [0, 1, 2];
-        	for (var elem in data){
-        		var scale = document.createElement("div");
-        		counter = counter +1;
-        		scale.id = "\"trustlevel" + counter + "\"";
-        		scale.style = "min-width: 310px; max-width: 400px; height: 300px; margin: 0; float:left;"
-        		scale.innerHTML = "";
-				// $("body").append("<div id=\"trustlevel" + counter + "\" style=\"min-width: 310px; max-width: 400px; height: 300px; margin: 0; float:left;\"></div>");
-				document.body.appendChild(scale);
-			};
-			// delete unwanted staff
-			$("[text-anchor=end]").hide();
-			$("g.highcharts-button").hide();
-			
-		});
+				var counter = 0;
+				var data = [40, 70, 50, 100];
+	        	for (var elem in data){
+	        		var scale = document.createElement("div");
+	        		counter = counter +1;
+	        		scale.id = "trustlevel" + counter;
+	        		scale.style = "min-width: 310px; max-width: 400px; height: 300px; margin: 0; float:left;"
+	        		scale.innerHTML = "";
+					document.body.appendChild(scale);
+					$("text").hide();
+					createChart("#trustlevel" + counter, [data[elem]]);
+				};
+
+				window.setTimeout(function() {
+					$("g.highcharts-button").hide();
+				}, 1000);
+				
+				
+			});
 		</script>
-		<div id="container" style="min-width: 310px; max-width: 400px; height: 300px; margin: 0; float:left;"></div>
-
 	</body>
 </html>
