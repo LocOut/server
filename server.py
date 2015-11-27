@@ -74,4 +74,13 @@ def addDeviceLocation(userId):
     else:
         return jsonify({'status': 400})
 
+@app.route('/remove_device_location/<deviceLocationId>')
+def removeDeviceLocation(deviceLocationId):
+    deviceLocation = DeviceLocation.query.filter_by(id=deviceLocationId)
+    if deviceLocation:
+        db.session.delete(deviceLocation)
+        db.session.commit()
+        return jsonify({'status': 200})
+    return jsonify({'status': 400})
+
 
