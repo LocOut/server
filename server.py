@@ -21,6 +21,14 @@ def index():
 def send_js(fileName):
     return send_from_directory('js', fileName)
 
+@app.route('/dashboard/<id>')
+def getDashboart(id):
+    user = User.query.filter_by(id=id).first()
+    if user:
+        return render_template('index.html')
+    else:
+        return 404
+
 @app.route('/user/<id>')
 def getUser(id):
     user = User.query.filter_by(id=id).first()
