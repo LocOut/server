@@ -23,7 +23,7 @@ def send_js(fileName):
 def getUser(id):
     user = User.query.filter_by(id=id).first()
     if user:
-        return jsonify({'status': 200, 'user': user.forJsonify()})
+        return jsonify({'user': user.forJsonify()}), 200
     else:
         return jsonify({'status': 404})
 
