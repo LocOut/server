@@ -1,6 +1,6 @@
 __author__ = 'Aron Kunze'
 
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, request, render_template, send_from_directory
 from flask.ext.sqlalchemy import SQLAlchemy
 import os
 
@@ -14,6 +14,10 @@ from models import User, DeviceLocation
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/js/<path:fileName>')
+def send_js(fileName):
+    return send_from_directory('js', fileName)
 
 @app.route('/user/<id>')
 def getUser(id):
