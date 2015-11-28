@@ -30,11 +30,13 @@
         });
 
         // Create a marker and set its position.
-        var marker = new google.maps.Marker({
-          map: map,
-          position: myLatLng,
-          title: 'Hello World!'
-        });
+        {% for d in devices %}
+          var marker = new google.maps.Marker({
+            map: map,
+            position: {lat:{{d.lat}} lng: {{d.long}}},
+            title: {{d.name}}
+          });
+         {% endfor %}
       }
     </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDaO7buaTgbK4ttmUz2F-vtCVykFSsBpB8&callback=initMap"

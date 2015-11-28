@@ -50,7 +50,8 @@ def getUserDevices(id):
 def mapDevices(id):
     user = User.query.filter_by(id=id).first()
     if user:
-        return render_template('map.html')
+        devices = user.deviceLocations
+        return render_template('map.html', devices=devices)
     else:
         return 404
 
