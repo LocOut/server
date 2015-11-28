@@ -45,11 +45,13 @@ def getUserDevices(id):
     else:
         return jsonify({'status': 400})
 
+
+
 @app.route('/device_location/<id>')
 def getDevice(id):
     deviceLocation = DeviceLocation.query.filter_by(id=id).first()
     if deviceLocation:
-        return render_template('index.html')
+        return render_template('device.html', id=id)
     else:
         return 404
 
