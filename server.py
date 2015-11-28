@@ -45,7 +45,7 @@ def getUserDevices(id):
     else:
         return jsonify({'status': 400})
 
-"""
+
 @app.route('map/<id>')
 def mapDevices(id):
     user = User.query.filter_by(id=id).first()
@@ -53,7 +53,7 @@ def mapDevices(id):
         return render_template('map.html')
     else:
         return 404
-"""
+
 
 @app.route('/device_location/<id>')
 def getDevice(id):
