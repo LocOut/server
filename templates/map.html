@@ -33,7 +33,7 @@
         {% for d in devices %}
           var marker = new google.maps.Marker({
             map: map,
-            position: {lat:{{d.lat}} lng: {{d.long}}},
+            position: {lat:{{d.lat}}, lng: {{d.long}}},
             title: {{d.name}}
           });
          {% endfor %}
