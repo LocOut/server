@@ -46,7 +46,7 @@ def getUserDevices(id):
         return jsonify({'status': 400})
 
 
-@app.route('map/<id>')
+@app.route('/map/<id>')
 def mapDevices(id):
     user = User.query.filter_by(id=id).first()
     if user:
