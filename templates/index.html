@@ -1,9 +1,13 @@
 <html>
 	<head>
+		<link href='https://fonts.googleapis.com/css?family=Roboto:300' rel='stylesheet' type='text/css'>
 		<style type="text/css">
-			h1 {
+			#heading {
 				text-align: center;
 				color: #FFFFFF;
+				font-family: 'Roboto', sans-serif;
+				font-size: 60;
+				margin-bottom: 15px;
 			}
 			.scale {width: 310px;
 				height: 300px;
@@ -15,7 +19,7 @@
 					height: 350px;
 					margin: 0 auto;}
 			body {
-				background-color: #2196F3
+				background-color: #607D8B
 			}
 		</style>
 	</head>
@@ -26,7 +30,7 @@
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
 		
 		<script src="../js/trustlevel.js"></script>
-		<h1 >Trust Levels</h1>
+		<div id="heading">Device Dashboard</div>
 		<div id="wrapper"/>
 		<script>
 			var userId = 1;
@@ -56,7 +60,7 @@
                 				point.update(Math.round(data.user.deviceLocations[i].trustLevel * 100));
                 			}
 		                }); 
-		            }, 10000);
+		            }, 1000);
 				});
 			});
 		</script>
