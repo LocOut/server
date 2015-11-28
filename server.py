@@ -21,6 +21,10 @@ def index():
 def send_js(fileName):
     return send_from_directory('js', fileName)
 
+@app.route('/images/<path:fileName>')
+def send_image(fileName):
+    return send_from_directory('images', fileName)
+
 @app.route('/dashboard/<id>')
 def getDashboart(id):
     user = User.query.filter_by(id=id).first()
