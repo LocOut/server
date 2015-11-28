@@ -45,6 +45,14 @@ def getUserDevices(id):
     else:
         return jsonify({'status': 400})
 
+@app.route('/device_location/<id>')
+def getDevice(id):
+    deviceLocation = DeviceLocation.query.filter_by(id=id).first()
+    if deviceLocation:
+        return render_template('index.html')
+    else:
+        return 404
+
 @app.route('/set_trust_level/<deviceLocationId>')
 def setTrustLevel(deviceLocationId):
     # set trust level (float 0-1) for device
